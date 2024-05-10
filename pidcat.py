@@ -1,4 +1,4 @@
-#!/usr/bin/env -S python -u
+#!/usr/bin/env -S python3 -u
 
 '''
 Copyright 2009, The Android Open Source Project
@@ -304,7 +304,7 @@ while adb.poll() is None:
       linebuf += colorize(' ' * (header_size - 1), bg=WHITE)
       linebuf += ' PID: %s   UID: %s   GIDs: %s' % (line_pid, line_uid, line_gids)
       linebuf += '\n'
-      print(linebuf)
+      print(bytes(linebuf, 'utf-8').decode('utf-8'))
       last_tag = None # Ensure next log gets a tag printed
 
   dead_pid, dead_pname = parse_death(tag, message)
@@ -314,7 +314,7 @@ while adb.poll() is None:
     linebuf += colorize(' ' * (header_size - 1), bg=RED)
     linebuf += ' Process %s (PID: %s) ended' % (dead_pname, dead_pid)
     linebuf += '\n'
-    print(linebuf)
+    print(bytes(linebuf, 'utf-8').decode('utf-8'))
     last_tag = None # Ensure next log gets a tag printed
 
   # Make sure the backtrace is printed after a native crash
@@ -359,4 +359,4 @@ while adb.poll() is None:
     message = matcher.sub(replace, message)
 
   linebuf += indent_wrap(message)
-  print(linebuf.encode('utf-8'))
+  print(bytes(linebuf, 'utf-8').decode('utf-8'))
